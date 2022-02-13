@@ -1,0 +1,4 @@
+name: Firstmod
+version: '${version}'
+main: com.suchamod.firstmod.Firstmod
+api-version: 1.17
