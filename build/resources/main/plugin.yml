@@ -1,0 +1,4 @@
+name: Firstmod
+version: '1.0-SNAPSHOT'
+main: com.suchamod.firstmod.Firstmod
+api-version: 1.17
