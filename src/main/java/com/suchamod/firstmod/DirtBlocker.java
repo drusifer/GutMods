@@ -3,10 +3,7 @@ package com.suchamod.firstmod;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Mob;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -25,8 +22,8 @@ public class DirtBlocker implements Listener {
      * Consumes 1 of special item to reduce damage of 1 to the player.  If the play is out of special item then
      * they take all the damage.
      *
-     * @param player
-     * @return
+     * @param player - The player for this event
+     * @return - the total amount blocked by the DirtShield
      */
     private double getDamageReduced(Player player, Material special_item, double damage_incurred) {
         Map<Integer, ItemStack> leftOver = player.getInventory()
@@ -53,13 +50,10 @@ public class DirtBlocker implements Listener {
             // If you were attacked by another play then reflect that damage to the player or mob
             if (damageReflected > 0) {
                 ((Player) damagee).playSound(damagee.getLocation(), Sound.BLOCK_ANVIL_HIT, 1f, 0.5f);
-                if (damager instanceof Player) {
-                    ((Player) damager).damage(damageReflected);
-                } else if (damager instanceof Mob) {
-
-                    ((Mob) damager).damage(damageReflected);
+                if (damager instanceof LivingEntity) {
+                    ((LivingEntity) damager).damage(damageReflected);
+                    logger.info("Reflected Damage to: " + damager.getName());
                 }
-                logger.info("Reflected Damage to: " + damager.getName());
             }
         }
     }
