@@ -1,38 +1,24 @@
 package com.suchamod.firstmod;
 
-import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class PlayerMovementListener implements Listener {
+public class DirtBlocker implements Listener {
     Logger logger = Bukkit.getLogger();
 
-    @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event) {
-        // Get the player that just moved
-        Player p = event.getPlayer();
-
-        // Get the Block right below the player
-        Block b = p.getLocation().getBlock().getRelative(BlockFace.DOWN);
-        // Create an explosion of power 5 on the player's location
-        if (b.getType() == Material.SAND) {
-
-            World w = p.getWorld();
-            w.createExplosion(p.getLocation(), 5);
-        }
-
+    public DirtBlocker() {
     }
 
     /**
@@ -66,12 +52,12 @@ public class PlayerMovementListener implements Listener {
             event.setDamage(damage - damageReflected);
             // If you were attacked by another play then reflect that damage to the player or mob
             if (damageReflected > 0) {
-                ((Player)damagee).playSound(damagee.getLocation(), Sound.BLOCK_ANVIL_HIT, 1f, 0.5f);
+                ((Player) damagee).playSound(damagee.getLocation(), Sound.BLOCK_ANVIL_HIT, 1f, 0.5f);
                 if (damager instanceof Player) {
                     ((Player) damager).damage(damageReflected);
                 } else if (damager instanceof Mob) {
 
-                    ((Mob)damager).damage(damageReflected);
+                    ((Mob) damager).damage(damageReflected);
                 }
                 logger.info("Reflected Damage to: " + damager.getName());
             }
